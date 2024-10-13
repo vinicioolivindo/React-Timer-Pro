@@ -9,7 +9,11 @@ const Temporizador = () => {
 
   const navigate = useNavigate()
 
-  const [time, setTime] = useState(300);
+
+  const [time, setTime] = useState(() => {
+    const savedTime = localStorage.getItem("timer");
+    return savedTime ? parseInt(savedTime) : 300;
+  });
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const h1Ref = useRef(null);
@@ -54,6 +58,10 @@ const Temporizador = () => {
       alert("Seu temporizador chegou ao fim e será reiniciado!");
     }
   }, [time]);
+
+  useEffect(() => {
+    localStorage.setItem('timer', time)
+  }, [time])
 
   useEffect(() => {
     if (isRunning) setIsEditable(false);
