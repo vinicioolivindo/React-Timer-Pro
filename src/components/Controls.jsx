@@ -1,17 +1,18 @@
-import { CirclePlay, PauseCircle } from "lucide-react";
+import { CirclePlay, Clock, PauseCircle, StopCircle } from "lucide-react";
+import ButtonIcon from "./ButtonsIcons";
 
-const Controls = () => {
+// eslint-disable-next-line react/prop-types
+const Controls = ({ onClickPlay, onClickPause, onClickReset, onClickEdit, editTime }) => {
+
+
   return (
-    <div>
-      <button>
-        <CirclePlay size={45}/>
-      </button>
-      <button>
-        <PauseCircle/>
-      </button>
-      <button>
-
-      </button>
+    <div className="flex gap-3">
+      <ButtonIcon onClick={onClickPlay} Icon={CirclePlay} buttonHome={false} />
+      <ButtonIcon onClick={onClickPause} Icon={PauseCircle} buttonHome={false} />
+      <ButtonIcon onClick={onClickReset} Icon={StopCircle} buttonHome={false} />
+      {editTime && (
+        <ButtonIcon onClick={onClickEdit} Icon={Clock} buttonHome={false} />
+      )}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Conometro from './pages/Cronometro.jsx'
+import Cronometro from './pages/Cronometro.jsx'
 import Temporizador from './pages/Temporizador.jsx'
 
 const router = createBrowserRouter([
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cronometro",
-    element: <Conometro/>
+    element: <Cronometro/>
   },
   {
     path: "/temporizador",
