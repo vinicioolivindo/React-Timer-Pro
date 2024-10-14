@@ -17,9 +17,9 @@ function App() {
 
   return (
     <ContainerPage>
-      <div className="mb-10 space-y-10 text-center ">
+      <div className="mb-10 space-y-10 text-center p-6 ">
         <h1 className="text-3xl font-bold text-white">Escolha sua funcionalidade: </h1>
-        <div className="flex justify-center gap-10">
+        <div className="flex justify-center  gap-10 flex-col sm:flex-row">
           <ButtonIcon onClick={irParaCronometro}  Icon={ClockArrowUpIcon} text="Cronômetro"/>
 
           <ButtonIcon onClick={irParaTemporizador} Icon={ClockArrowDownIcon} text="Temporizador"/>
