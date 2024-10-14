@@ -43,14 +43,63 @@ const Temporizador = () => {
   };
 
   const handleToggleEdit = () => {
-    if (isEditable) {
-      const [newMinutes, newSeconds] = h1Ref.current.innerText.split(':').map(Number);
-      const totalSeconds = newMinutes * 60 + newSeconds;
+    if (!isRunning) {
+      if (isEditable) {
+        const [newMinutes, newSeconds] = h1Ref.current.innerText
+          .split(':')
+          .map(Number);
 
-      if (!isNaN(totalSeconds)) setTime(totalSeconds);
+        // Verifica se os valores são válidos
+        if (
+          !isNaN(newMinutes) &&
+          !isNaN(newSeconds) &&
+          newMinutes >= 0 &&
+          newMinutes < 60 &&
+          newSeconds >= 0 &&
+          newSeconds < 60
+        ) {
+          const totalSeconds = newMinutes * 60 + newSeconds;
+          setTime(totalSeconds);
+        } else {
+          alert('Digite um tempo válido no formato MM:SS que seja <= 60:00');
+          setTime(300)
+        }
+      }
+      setIsEditable((prev) => !prev);
     }
-    setIsEditable((prev) => !prev);
   };
+
+
+  useEffect(() => {
+    const preventInvalidInput = (e) => {
+      const inputValue = h1Ref.current.innerText;
+      const regex = /^[0-9:]*$/; // Permite apenas números e ':'.
+
+      // Bloqueia a entrada se não for válida ou se exceder 60:00
+      if (!regex.test(e.key) || (e.key === ':' && inputValue.split(':').length > 1)) {
+        e.preventDefault();
+      }
+
+      // Checa se a edição resultará em um valor inválido (maior que 60:00)
+      const parts = inputValue.split(':').map(Number);
+      if (parts.length === 2) {
+        const minutes = parts[0];
+        const seconds = parts[1];
+        if ((e.key >= '0' && e.key <= '9') && (minutes >= 60 || seconds >= 60)) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    const h1Element = h1Ref.current;
+    h1Element.addEventListener('keypress', preventInvalidInput);
+
+    return () => {
+      h1Element.removeEventListener('keypress', preventInvalidInput);
+    };
+  }, []);
+
+
 
   useEffect(() => {
     if (time === 0) {
